@@ -41,6 +41,7 @@ func staticHander(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	init()
 	fmt.Println("main")
 	redis.Store("test", "testvalue")
 }
