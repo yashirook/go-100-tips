@@ -11,7 +11,11 @@ var a = func() int {
 }()
 
 func init() {
-	fmt.Println("init")
+	fmt.Println("init first")
+}
+
+func init() {
+	fmt.Println("init second")
 }
 
 func main() {
