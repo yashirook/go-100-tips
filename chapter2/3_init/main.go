@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"init/pkg/redis"
+)
 
 var a = func() int {
 	fmt.Println("var")
@@ -13,4 +16,5 @@ func init() {
 
 func main() {
 	fmt.Println("main")
+	redis.Store("test", "testvalue")
 }
