@@ -20,18 +20,12 @@ func (b *ConfigBuilder) Port(port int) *ConfigBuilder {
 func (b *ConfigBuilder) Build() (Config, error) {
 	cfg := Config{}
 
-	if b.port == nil {
-		cfg.Port = DefaultHTTPPort
+	determinedPort, err := determinePort(b.port)
+	if err != nil {
+		return Config{}, err
 	}
 
-	if *b.port == 0 {
-		cfg.Port = randomPort()
-	} else if *b.port < 0 {
-		return Config{}, errors.New("invalid port number: port number should be positive value.")
-	} else {
-		cfg.Port = *b.port
-	}
-
+	cfg.Port = determinedPort
 	return cfg, nil
 }
 
@@ -41,4 +35,18 @@ func randomPort() int {
 
 type Config struct {
 	Port int
+}
+
+func determinePort(port *int) (int, error) {
+	if port == nil {
+		return DefaultHTTPPort, nil
+	} else {
+		if *port == 0 {
+			return randomPort(), nil
+		} else if *port < 0 {
+			return 0, errors.New("invalid port number: port number should be positive value.")
+		} else {
+			return *port, nil
+		}
+	}
 }
