@@ -2,8 +2,6 @@ package httplib
 
 import (
 	"errors"
-	"fmt"
-	"net/http"
 )
 
 type options struct {
@@ -22,20 +20,24 @@ func WithPort(port int) Option {
 	}
 }
 
-func NewServer(addr string, opts ...Option) (*http.Server, error) {
+func NewServer(addr string, opts ...Option) (Server, error) {
 	var options options
 	for _, opt := range opts {
 		if err := opt(&options); err != nil {
-			return nil, err
+			return Server{}, err
 		}
 	}
 
 	determinedPort, err := determinePort(options.port)
 	if err != nil {
-		return nil, err
+		return Server{}, err
 	}
 
-	fmt.Printf("initialize http.Server struct using by %d", determinedPort)
 	// 本来はhttp.Serverを返すが今回のスコープ外
-	return nil, nil
+	return Server{Address: addr, Port: determinedPort}, nil
+}
+
+type Server struct {
+	Address string
+	Port    int
 }
