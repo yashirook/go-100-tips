@@ -1,11 +1,13 @@
 package stringset
 
-func New(...string) map[string]struct{} {
+type Set map[string]struct{}
+
+func New(...string) Set {
 	// dosomething
-	return map[string]struct{}{}
+	return Set{}
 }
 
-func Sort(map[string]struct{}) []string {
+func (s Set) Sort() []string {
 	// dosomething
 	return []string{"hoge"}
 }
