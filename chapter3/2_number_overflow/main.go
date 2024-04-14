@@ -24,3 +24,22 @@ func AddInt(a, b int) int {
 	}
 	return a + b
 }
+
+func MultiplyInt(a, b int) int {
+	if a == 0 || b == 0 {
+		return 0
+	}
+
+	result := a * b
+	if a == 1 || b == 1 {
+		return result
+	}
+
+	if a == math.MinInt || b == math.MinInt {
+		panic("integer overflow")
+	}
+	if result/b != a {
+		panic("integer overflow")
+	}
+	return result
+}
