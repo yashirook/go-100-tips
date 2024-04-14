@@ -17,3 +17,10 @@ func Inc32(counter int32) int32 {
 	}
 	return counter + 1
 }
+
+func AddInt(a, b int) int {
+	if (b > 0 && a > math.MaxInt-b) || (b < 0 && a < math.MinInt-b) {
+		panic("int overflow")
+	}
+	return a + b
+}
